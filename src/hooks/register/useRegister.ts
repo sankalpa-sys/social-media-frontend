@@ -1,5 +1,4 @@
 import { useState } from "react";
-import axios from "axios";
 import {IRegisterFormData} from "../../types";
 import {useLogin} from "../login/useLogin.ts";
 import {publicApi} from "../../api/api";
@@ -9,7 +8,7 @@ export const useRegister = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
 
-    const handleRegister = async(formData: IRegisterFormData) => {
+    const handleRegister = async(formData: IRegisterFormData, imageUrl) => {
         try{
             setError("")
             setLoading(true);
@@ -18,6 +17,7 @@ export const useRegister = () => {
                     name: formData.name,
                     email: formData.email,
                     password: formData.password,
+                    profilePicture: imageUrl
                 },
                 method: "POST",
                 url: "/auth/register/"

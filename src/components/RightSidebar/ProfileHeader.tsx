@@ -31,7 +31,7 @@ function ProfileHeader() {
     return (
         <div className='flex items-center w-full space-x-4 justify-between'>
             <div className='flex items-center space-x-3 cursor-pointer'>
-                <img className='h-10 w-10 rounded-full object-cover' src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=800" alt=""/>
+                <img className='h-10 w-10 rounded-full object-cover' src={user?.profilePicture} alt=""/>
                 <div>
                     <p>{getUserName(user?.name)}</p>
                     <p className='text-gray-200 text-xs'>{user?.name}</p>

@@ -2,7 +2,7 @@ import {sidebarData, sidebarData2} from "../../data/sidebarData.tsx";
 
 function Sidebar() {
     return (
-        <div className='col-span-2 border-r-[0.5px] border-gray-500 px-5'>
+        <div className='hidden md:block col-span-2 border-r-[0.5px] border-gray-500 px-5'>
             <div>
             <h1 className='font-bold text-2xl italic py-10'>InstaClone</h1>
             </div>

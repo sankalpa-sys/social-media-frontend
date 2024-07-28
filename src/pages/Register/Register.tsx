@@ -1,8 +1,10 @@
 import {Button} from "antd";
-import {ChangeEvent, FormEvent, useState} from "react";
+import {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import {IRegisterFormData} from "../../types";
 import {useRegister} from "../../hooks/register/useRegister";
 import {useNavigate} from "react-router-dom";
+import ImageUpload from "../../components/ImageUpload/ImageUpload";
+import {UploadOutlined} from "@ant-design/icons";
 
 function Register() {
      const navigator = useNavigate()
@@ -13,14 +15,21 @@ function Register() {
         password: '',
         repeat_password: ''
     })
+    const [imageUrl, setImageUrl] = useState<string>("")
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setFormData({...formData, [e.target.name]: e.target.value})
     }
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
-        handleRegister(formData);
+        handleRegister(formData, imageUrl);
     }
+
+    useEffect(()=>{
+        return () => {
+            setImageUrl("")
+        }
+    },[])
     return (
        <div className='bg-black'>
            <div className='flex items-center justify-center h-screen w-full'>
@@ -56,6 +65,12 @@ function Register() {
                               className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirm
                            password</label>
                    </div>
+                  <div className='flex items-center space-x-5'>
+                      <ImageUpload onImageUpload={setImageUrl}>
+                          <Button icon={<UploadOutlined/>}>Profile Picture</Button>
+                      </ImageUpload>
+                      {imageUrl && <img className='h-20 w-20 object-cover rounded-full' src={imageUrl} alt=""/>}
+                  </div>
                    <p className='text-red-600 text-xs py-2'>{error ? error: ""}</p>
                    <Button loading={loading} htmlType='submit' type='primary'>Submit</Button>
                    <p className='text-white text-xs py-6'>Already have an account?  <span onClick={()=>navigator("/login")} className='text-blue-600 underline pl-1 cursor-pointer hover:scale-105'>Login</span></p>

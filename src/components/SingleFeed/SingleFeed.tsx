@@ -2,19 +2,23 @@ import {
     CheckCircleFilled,
     CommentOutlined,
     EllipsisOutlined, FireOutlined,
-    HeartFilled,
+    HeartFilled, HeartOutlined,
     SendOutlined
 } from "@ant-design/icons";
-import {getUserName} from "../../utils.ts";
-import {Button, Modal} from "antd";
+import {getTimeAgoGreatestUnit, getUserName, likeAndUnlikeHandler} from "../../utils.ts";
+import {Button, Divider, Image, Modal} from "antd";
 import {useState} from "react";
-import axios from "axios";
 import {useUser} from "../../context/userContext";
 import {privateApi} from "../../api/api";
+import { useRef } from 'react';
+import useDoubleClick from 'use-double-click';
+import PostLikes from "../PostLikes/PostLikes";
 
 function SingleFeed({feed, setFeeds}: {feed: any}) {
+    const imageRef = useRef()
     const {user} = useUser()
     const [openFeedSettingsModal, setOpenFeedSettingsModal] = useState<boolean>(false);
+    const [openLikeModal, setOpenLikeModal] = useState<boolean>(false);
     const [deleting, setDeleting] = useState<boolean>(false);
     const handleDelete = async () => {
        if(deleting) return;
@@ -33,19 +37,34 @@ function SingleFeed({feed, setFeeds}: {feed: any}) {
         }
     }
 
-    console.log("user", user)
-    console.log("feed",feed)
+    const handleLike = () => {
+       likeAndUnlikeHandler(user,feed, setFeeds)
+    }
+
+    useDoubleClick({
+        onDoubleClick: () => {
+            !feed.likes.includes(user?._id) ? handleLike() : ()=> {}
+        },
+        ref: imageRef,
+        latency: 250
+    });
+
+    const toggleLikeModal = (value: boolean) => {
+        setOpenLikeModal(value);
+    }
+
+
     return (
-        <div className='border-b-[0.5px] border-gray-500 select-none '>
-            <div className='header flex justify-between items-start'>
+        <div className='border-b-[0.5px] border-gray-500 select-none'>
+            <div className='header px-5 md:px-0 flex justify-between items-start'>
                 <div className='flex items-center space-x-2'>
-                    <img className='h-8 w-8 rounded-full object-cover' src="https://images.pexels.com/photos/3619947/pexels-photo-3619947.jpeg?auto=compress&cs=tinysrgb&w=800" alt=""/>
+                    <img className='h-8 w-8 rounded-full object-cover' src={feed?.user?.profilePicture} alt=""/>
                     <div>
                        <div className='flex space-x-1 text-xs items-center'>
                            <p className='text-sm'>{getUserName(feed?.user?.name)}</p>
                            <CheckCircleFilled className='text-blue-600' style={{fontSize: "10px"}} />
                            <p>.</p>
-                           <p>45m</p>
+                           <p>{getTimeAgoGreatestUnit(feed?.createdAt)}</p>
                        </div>
                         <p className='text-xs'>Nepal</p>
                     </div>
@@ -58,18 +77,29 @@ function SingleFeed({feed, setFeeds}: {feed: any}) {
                 )}
             </div>
             <div className='post'>
-                <img className='h-[30rem] w-[26rem] object-cover rounded-md mt-4' src={feed?.img} alt=""/>
+                <div ref={imageRef} className='w-[26rem] h-[30rem] mt-4 bg-black shadow-sm shadow-gray-400'>
+                    <Image
+                        preview={false}
+                        width={"100%"}
+                        height={"100%"}
+                        src={feed?.img}
+                    />
+                </div>
             </div>
-            <div className='footer py-4'>
+            <div className='footer py-6 px-5 md:px-0'>
                 <div className='flex items-center justify-between'>
                     <div className='flex items-center space-x-4'>
-                        <HeartFilled style={{fontSize: "24px", cursor:"pointer"}} />
+                        {feed.likes.includes(user?._id) ? (
+                            <HeartFilled onClick={handleLike} style={{ fontSize: '24px', cursor: 'pointer', color: 'red' }} />
+                        ) : (
+                            <HeartOutlined onClick={handleLike} style={{ fontSize: '24px', cursor: 'pointer' }} />
+                        )}
                         <CommentOutlined style={{fontSize: "24px", cursor:"pointer"}} />
                         <SendOutlined style={{fontSize: "24px" , cursor:"pointer"}} />
                     </div>
                     <FireOutlined style={{fontSize: "24px", cursor:"pointer"}} />
                 </div>
-                <p className='pt-4 text-sm font-semibold'>{feed?.likes?.length} likes</p>
+                <p onClick={()=>toggleLikeModal(true)} className='pt-4 text-sm font-semibold cursor-pointer'>{feed?.likes?.length} {feed?.likes?.length === 1 ? "like": "likes"}</p>
                 <div className='flex items-center space-x-1 py-1'>
                     <p className='text-xs font-semibold'>{getUserName(feed?.user?.name)}</p>
                     <CheckCircleFilled className='text-blue-600' style={{fontSize: "10px"}} />
@@ -88,15 +118,37 @@ function SingleFeed({feed, setFeeds}: {feed: any}) {
                     <Button type='primary' onClick={()=>setOpenFeedSettingsModal(false)}>Cancel</Button>
                 ]}
             >
-                <div className='space-y-2'>
-                    <p className='py-2 cursor-pointer hover:bg-gray-100 text-base pl-4 rounded-md'>Edit</p>
-                    <p className='py-2 cursor-pointer hover:bg-gray-100 text-base pl-4 rounded-md'>Save</p>
-                    <p className='py-2 cursor-pointer hover:bg-gray-100 text-base pl-4 rounded-md'>Hide like counts to other</p>
-                    <p className='py-2 cursor-pointer hover:bg-gray-100 text-base pl-4 rounded-md'>Turn off commenting</p>
-                    <p className='py-2 cursor-pointer hover:bg-gray-100 text-base pl-4 rounded-md'>Add to favorites</p>
+                <div className='space-y-2 pb-10'>
+                    <p className='py-2 cursor-pointer hover:bg-gray-500 text-base pl-4 rounded-md'>Edit</p>
+                    <p className='py-2 cursor-pointer hover:bg-gray-500 text-base pl-4 rounded-md'>Save</p>
+                    <p className='py-2 cursor-pointer hover:bg-gray-500 text-base pl-4 rounded-md'>Hide like counts to other</p>
+                    <p className='py-2 cursor-pointer hover:bg-gray-500 text-base pl-4 rounded-md'>Turn off commenting</p>
+                    <p className='py-2 cursor-pointer hover:bg-gray-500 text-base pl-4 rounded-md'>Add to favorites</p>
                     <p onClick={handleDelete} className={`py-2 cursor-pointer hover:bg-red-600 hover:text-white text-base pl-4 rounded-md ${deleting && 'animate-pulse'}`}>Delete</p>
                 </div>
             </Modal>
+
+            {openLikeModal && (
+                <Modal
+                    className="custom-modal"
+                    // bodyStyle={{backgroundColor: "black"}}
+                    maskClosable={true}
+                    closable={false}
+                    centered
+                    open={openLikeModal}
+                    footer={[
+                        <Button type='primary' onClick={()=>toggleLikeModal(false)}>Done</Button>
+                    ]}
+                >
+                    <div className='max-h-[50vh] min-h-[30vh] overflow-y-scroll scrollbar-hide'>
+                        <p className='font-semibold text-center text-lg'>Likes</p>
+                        <Divider style={{backgroundColor:"white"}}/>
+                        <PostLikes key={openLikeModal ? feed?._id : null} id={feed?._id}/>
+                    </div>
+                </Modal>
+
+            )}
+
         </div>
     );
 }

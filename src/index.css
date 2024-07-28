@@ -39,3 +39,19 @@
 .feedModal{
     background-color: black !important;
 }
+.ant-image-img{
+    object-fit: contain !important;
+    object-position: center !important;
+}
+.ant-modal-content{
+    background-color: #1f2937 !important;
+    color: white !important;
+/*    white box shadow more spread*/
+    right: 75px;
+}
+
+.ant-modal-wrap{
+    backdrop-filter: blur(10px) !important; /* Adjust the blur value as needed */
+    background: rgba(0, 0, 0, 0.5) !important;
+}
+
