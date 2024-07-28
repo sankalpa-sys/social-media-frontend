@@ -17,7 +17,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUpload, children }) =>
             const formData = new FormData();
             formData.append("file", e.target.files[0]);
             formData.append("upload_preset", "socialMedia");
-            const res = await axios.post("https://api.cloudinary.com/v1_1/sankalpa-sys/image/upload", formData);
+            const res = await axios.post(import.meta.env.VITE_CLOUDINARY_URL, formData);
             const imageUrl = res?.data?.secure_url;
             onImageUpload(imageUrl);
         } catch (e) {

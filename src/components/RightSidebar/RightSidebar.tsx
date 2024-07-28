@@ -1,7 +1,7 @@
 import ProfileHeader from "./ProfileHeader";
 import {useEffect, useState} from "react";
-import axios from "axios";
 import {getUserName} from "../../utils";
+import {privateApi} from "../../api/api";
 
 
 function RightSidebar() {
@@ -16,10 +16,9 @@ function RightSidebar() {
         setLoading(true)
         setError("")
         try{
-            const res = await axios.get("http://localhost:8000/api/user/suggested-users", {
-                headers: {
-                    "auth-token": `Bearer ${localStorage.getItem("auth-token")}`
-                }
+            const res = await privateApi({
+                method: "GET",
+                url: "/user/suggested-users"
             })
             setSuggestedUsers(res.data)
             console.log("res", res.data)
@@ -32,10 +31,9 @@ function RightSidebar() {
 
     const handleFollow = async (id) => {
        try {
-            await axios.post(`http://localhost:8000/api/follower/follow/${id}`, {}, {
-               headers: {
-                   "auth-token": `Bearer ${localStorage.getItem("auth-token")}`
-               }
+           await privateApi({
+               method: "POST",
+               url: `/follower/follow/${id}`
            })
 
            const newUsers = suggestedUsers.filter((user)=> String(user._id)!==id)

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import {ILoginFormData} from "../../types";
+import {publicApi} from "../../api/api";
 
 interface IReturnType {
     loading: boolean;
@@ -16,10 +17,14 @@ export const useLogin = (): IReturnType => {
         try{
             setError("")
             setLoading(true);
-            const res = await axios.post("http://localhost:8000/api/auth/login", {
-                email: formData.email,
-                password: formData.password,
-            });
+            const res = await publicApi({
+                data: {
+                    email: formData.email,
+                    password: formData.password,
+                },
+                method: "POST",
+                url: "/auth/login"
+            })
             localStorage.setItem("auth-token", res.data)
             window.location.reload()
         }catch (e: any) {

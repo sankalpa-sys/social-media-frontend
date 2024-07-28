@@ -10,6 +10,7 @@ import {Button, Modal} from "antd";
 import {useState} from "react";
 import axios from "axios";
 import {useUser} from "../../context/userContext";
+import {privateApi} from "../../api/api";
 
 function SingleFeed({feed, setFeeds}: {feed: any}) {
     const {user} = useUser()
@@ -19,9 +20,10 @@ function SingleFeed({feed, setFeeds}: {feed: any}) {
        if(deleting) return;
         setDeleting(true)
         try{
-            await axios.delete(`http://localhost:8000/api/post/${feed?._id}`, {headers: {
-                    "auth-token": `Bearer ${localStorage.getItem("auth-token")}`
-                }})
+            await privateApi({
+                method: "DELETE",
+                url: `/post/${feed._id}`
+            })
             setFeeds((prevFeeds) => prevFeeds.filter((f) => String(f._id) !== String(feed._id)))
         }catch (e) {
             console.log(e)

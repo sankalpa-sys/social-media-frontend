@@ -1,9 +1,9 @@
 import SingleFeed from "../SingleFeed/SingleFeed.tsx";
 import {useEffect, useState} from "react";
-import axios from "axios";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner.tsx";
 import nodata from '../../assets/nodata.png'
 import AddPost from "../AddPost/AddPost";
+import {privateApi} from "../../api/api"
 function MainFeedSection() {
     const [feeds, setFeeds] = useState<any>([])
     const [loading, setLoading] = useState<boolean>(false)
@@ -13,10 +13,9 @@ function MainFeedSection() {
             try{
                 setError("")
                 setLoading(true)
-                const res = await axios.get("http://localhost:8000/api/post/", {
-                    headers: {
-                        "auth-token": `Bearer ${localStorage.getItem("auth-token")}`
-                    }
+                const res = await privateApi({
+                    method: "GET",
+                    url: "/post"
                 })
                 setFeeds(res.data)
             }catch (e: any) {
@@ -28,8 +27,6 @@ function MainFeedSection() {
         fetchFeeds()
 
     },[])
-
-    console.log("feeds", feeds);
 
     if(loading) return (
         <div className='col-span-7 h-screen flex items-center justify-center'>
@@ -52,7 +49,7 @@ function MainFeedSection() {
         </div>
     )
     return (
-            <div className='col-span-7 overflow-y-scroll h-screen'>
+            <div className='col-span-7 overflow-y-scroll h-screen scrollbar-hide'>
                 <div className="w-full flex items-center justify-center">
                     <AddPost setFeeds={setFeeds}/>
                 </div>

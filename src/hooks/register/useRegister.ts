@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import {IRegisterFormData} from "../../types";
 import {useLogin} from "../login/useLogin.ts";
+import {publicApi} from "../../api/api";
 
 export const useRegister = () => {
     const {handleLogin} = useLogin();
@@ -12,15 +13,18 @@ export const useRegister = () => {
         try{
             setError("")
             setLoading(true);
-          const res = await axios.post("http://localhost:8000/api/auth/register", {
-            name: formData.name,
-            email: formData.email,
-            password: formData.password,
-          });
-            handleLogin({
-                email: res?.data.email,
-                password: res?.data?.password
+            const res = await publicApi({
+                data: {
+                    name: formData.name,
+                    email: formData.email,
+                    password: formData.password,
+                },
+                method: "POST",
+                url: "/auth/register/"
             })
+            if(res.status === 201){
+                handleLogin({email: formData.email, password: formData.password})
+            }
         }catch (e: any) {
             setError(e)
         }finally{

@@ -1,8 +1,8 @@
 import {useEffect, useState} from "react";
-import axios from "axios";
 import {getUserName} from "../../utils";
 import {Skeleton} from "antd";
 import {useUser} from "../../context/userContext";
+import {privateApi} from "../../api/api";
 
 function ProfileHeader() {
     const {user, setUser} = useUser()
@@ -13,7 +13,10 @@ function ProfileHeader() {
             setLoading(true)
             setError("")
             try{
-                const res  = await axios.get("http://localhost:8000/api/user/profile", {headers: {"auth-token": `Bearer ${localStorage.getItem("auth-token")}`}})
+          const res = await privateApi({
+                    method: "GET",
+                    url: "/user/profile"
+                })
                 setUser(res.data);
             }catch (e) {
                 setError(e)
