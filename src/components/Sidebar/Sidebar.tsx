@@ -4,7 +4,7 @@ function Sidebar() {
     return (
         <div className='col-span-2 border-r-[0.5px] border-gray-500 px-5'>
             <div>
-            <h1 className='font-bold text-2xl italic py-10'>Instagram</h1>
+            <h1 className='font-bold text-2xl italic py-10'>InstaClone</h1>
             </div>
             <div className='flex flex-col space-y-14'>
                 <div className='space-y-4'>
