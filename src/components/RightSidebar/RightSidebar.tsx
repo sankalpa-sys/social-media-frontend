@@ -30,7 +30,7 @@ function RightSidebar() {
         }
     }
 
-    const handleFollow = async (id) => {
+    const handleFollow = async (id: any) => {
        try {
            await privateApi({
                method: "POST",

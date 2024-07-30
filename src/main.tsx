@@ -5,6 +5,7 @@ import './index.css'
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import Login from "./pages/Login/Login.tsx";
 import Register from "./pages/Register/Register.tsx";
+import UserProfile from "./pages/profile/UserProfile.tsx";
 const user: string = localStorage.getItem("auth-token") || "";
 const router = createBrowserRouter([
     {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
     {
         path: "/register",
         element: user ? <App/>: <Register/>,
+    },
+    {
+        path: "/profile/:id",
+        element: user ? <UserProfile/>: <Login/>,
     },
 ]);
 

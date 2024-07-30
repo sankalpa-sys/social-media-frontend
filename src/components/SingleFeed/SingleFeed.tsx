@@ -11,10 +11,13 @@ import {useState} from "react";
 import {useUser} from "../../context/userContext";
 import {privateApi} from "../../api/api";
 import { useRef } from 'react';
+// @ts-ignore
 import useDoubleClick from 'use-double-click';
 import PostLikes from "../PostLikes/PostLikes";
+import {useNavigate} from "react-router-dom";
 
-function SingleFeed({feed, setFeeds}: {feed: any}) {
+function SingleFeed({feed, setFeeds}: {feed: any, setFeeds: any}) {
+    const navigator = useNavigate()
     const imageRef = useRef()
     const {user} = useUser()
     const [openFeedSettingsModal, setOpenFeedSettingsModal] = useState<boolean>(false);
@@ -28,7 +31,7 @@ function SingleFeed({feed, setFeeds}: {feed: any}) {
                 method: "DELETE",
                 url: `/post/${feed._id}`
             })
-            setFeeds((prevFeeds) => prevFeeds.filter((f) => String(f._id) !== String(feed._id)))
+            setFeeds((prevFeeds: any) => prevFeeds.filter((f:any) => String(f._id) !== String(feed._id)))
         }catch (e) {
             console.log(e)
         }finally {
@@ -43,6 +46,7 @@ function SingleFeed({feed, setFeeds}: {feed: any}) {
 
     useDoubleClick({
         onDoubleClick: () => {
+            // @ts-ignore
             !feed.likes.includes(user?._id) ? handleLike() : ()=> {}
         },
         ref: imageRef,
@@ -52,16 +56,14 @@ function SingleFeed({feed, setFeeds}: {feed: any}) {
     const toggleLikeModal = (value: boolean) => {
         setOpenLikeModal(value);
     }
-
-
     return (
         <div className='border-b-[0.5px] border-gray-500 select-none'>
             <div className='header px-5 md:px-0 flex justify-between items-start'>
                 <div className='flex items-center space-x-2'>
-                    <img className='h-8 w-8 rounded-full object-cover' src={feed?.user?.profilePicture} alt=""/>
+                    <img onClick={()=>navigator(`/profile/${feed?.user?._id}`)} className='h-8 w-8 rounded-full object-cover cursor-pointer' src={feed?.user?.profilePicture} alt=""/>
                     <div>
                        <div className='flex space-x-1 text-xs items-center'>
-                           <p className='text-sm'>{getUserName(feed?.user?.name)}</p>
+                           <p onClick={()=>navigator(`/profile/${feed?.user?._id}`)} className='text-sm cursor-pointer hover:underline'>{getUserName(feed?.user?.name)}</p>
                            <CheckCircleFilled className='text-blue-600' style={{fontSize: "10px"}} />
                            <p>.</p>
                            <p>{getTimeAgoGreatestUnit(feed?.createdAt)}</p>
