@@ -29,13 +29,13 @@ function MainFeedSection() {
     },[])
 
     if(loading) return (
-        <div className='col-span-7 h-screen flex items-center justify-center'>
+        <div className='col-span-7 w-full h-screen flex items-center justify-center'>
            <LoadingSpinner title="Loading feeds..."/>
         </div>
     )
     if(error) return <h1>Error: {error}</h1>
     if(!loading && !error && feeds.length === 0) return (
-        <div className='col-span-7 overflow-y-scroll h-screen scrollbar-hide'>
+        <div className='w-full overflow-y-scroll h-screen scrollbar-hide'>
             <h1 className='text-2xl pb-10 pt-5 italic font-bold md:hidden pl-5'>Instaclone</h1>
            <div className="w-full flex items-center justify-center">
                <AddPost setFeeds={setFeeds}/>

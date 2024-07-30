@@ -1,4 +1,3 @@
-import Sidebar from "../../components/Sidebar/Sidebar.tsx";
 import ProfilePageHeader from "../../components/profile/ProfilePageHeader.tsx";
 import {Tabs} from "antd";
 import UserPosts from "../../components/profile/UserPosts.tsx";
@@ -38,21 +37,14 @@ function UserProfile() {
     }
 
     if(loading) return (
-        <div className='bg-black text-white grid grid-cols-12'>
-          <div className='col-span-2'>
-              <Sidebar/>
-          </div>
+        <div className='bg-black text-white grid grid-cols-12 w-full'>
             <div className='h-screen w-full flex items-center justify-center bg-black text-white col-span-10'>
                 <LoadingSpinner title="Please wait..."/>
             </div>
         </div>
     )
     return (
-        <div className='bg-black text-white h-screen grid grid-cols-12'>
-          <div className='col-span-2'>
-              <Sidebar/>
-          </div>
-            <div className='col-span-10 max-w-3xl mx-auto pt-10 overflow-y-scroll scrollbar-hide pb-5'>
+            <div className='bg-black text-white h-screen max-w-3xl mx-auto pt-10 overflow-y-scroll scrollbar-hide pb-5'>
                 <ProfilePageHeader user = {user}/>
                 <div className='py-20'>
                     <Tabs
@@ -90,7 +82,6 @@ function UserProfile() {
                     />
                 </div>
             </div>
-        </div>
     );
 }
 

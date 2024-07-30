@@ -1,34 +1,11 @@
-import {useEffect, useState} from "react";
 import {getUserName} from "../../utils";
 import {Skeleton} from "antd";
 import {useUser} from "../../context/userContext";
-import {privateApi} from "../../api/api";
 import {useNavigate} from "react-router-dom";
 
 function ProfileHeader() {
     const navigator = useNavigate()
-    const {user, setUser} = useUser()
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string>("");
-    useEffect(()=> {
-        const getUserProfile = async() => {
-            setLoading(true)
-            setError("")
-            try{
-          const res = await privateApi({
-                    method: "GET",
-                    url: "/user/profile"
-                })
-                setUser(res.data);
-            }catch (e) {
-                setError(e)
-            }finally {
-                setLoading(false)
-            }
-        }
-        getUserProfile()
-    },[])
-    console.log('user', user)
+    const {user, loading, error} = useUser()
     if(loading) return <Skeleton avatar paragraph={{ rows: 2 }} />
     if(error) return <p>Error: {error}</p>
     return (

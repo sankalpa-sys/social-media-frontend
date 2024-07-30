@@ -4,7 +4,7 @@ import {useNavigate} from "react-router-dom";
 function Sidebar() {
     const navigator = useNavigate()
     return (
-        <div className='hidden md:block border-r-[0.5px] border-gray-500 px-5'>
+        <div className='hidden md:block border-r-[0.5px] border-gray-500 px-5 col-span-2 h-screen'>
             <div>
             <h1 className='font-bold text-2xl italic py-10'>InstaClone</h1>
             </div>
