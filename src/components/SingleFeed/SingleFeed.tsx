@@ -68,7 +68,7 @@ function SingleFeed({feed, setFeeds}: {feed: any, setFeeds: any}) {
                            <p>.</p>
                            <p>{getTimeAgoGreatestUnit(feed?.createdAt)}</p>
                        </div>
-                        <p className='text-xs'>Nepal</p>
+                        <p className='text-xs'>{feed?.city ? feed?.city + "," : ""} {feed?.country || "Nepal"}</p>
                     </div>
                 </div>
                 {(String(user?._id) === String(feed?.user?._id) || user?.isAdmin) && (

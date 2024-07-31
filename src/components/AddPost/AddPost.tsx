@@ -7,6 +7,10 @@ import {useUser} from "../../context/userContext";
 
 
 function AddPost({setFeeds}:{setFeeds: any}) {
+    const location = JSON.parse(localStorage.getItem("location")) || {
+        country: "",
+        city: ""
+    }
     const { TextArea } = Input;
     const {user} = useUser()
     const[inputValue, setInputValue] = useState<string>("")
@@ -19,7 +23,9 @@ function AddPost({setFeeds}:{setFeeds: any}) {
             const res = await privateApi({
                 data: {
                     desc: inputValue,
-                    img: imageUrl
+                    img: imageUrl,
+                    country: location?.country,
+                    city: location?.city
                 },
                 method: "POST",
                 url: "/post/create"

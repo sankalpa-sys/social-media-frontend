@@ -7,6 +7,7 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import UserProfile from "./pages/profile/UserProfile";
 import {privateApi} from "./api/api";
+import LocationComponent from "./components/LocationComponent/LocationComponent.tsx";
 
 function App() {
     const [user, setUser] = useState(null)
@@ -44,6 +45,7 @@ function App() {
                     </Route>
                 </Routes>
             </UserContext.Provider>
+            <LocationComponent/>
         </Router>
     );
 }

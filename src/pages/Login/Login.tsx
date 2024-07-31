@@ -3,6 +3,7 @@ import {useLogin} from "../../hooks/login/useLogin.ts";
 import {ChangeEvent, FormEvent, useState} from "react";
 import {ILoginFormData} from "../../types";
 import {useNavigate} from "react-router-dom";
+import LocationComponent from "../../components/LocationComponent/LocationComponent.tsx";
 function Login() {
      const navigator = useNavigate()
     const { loading, error, handleLogin } = useLogin();
