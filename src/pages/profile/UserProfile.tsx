@@ -45,7 +45,7 @@ function UserProfile() {
     )
     return (
             <div className='bg-black text-white h-screen max-w-3xl mx-auto pt-10 overflow-y-scroll scrollbar-hide pb-5'>
-                <ProfilePageHeader user = {user}/>
+                <ProfilePageHeader getUserProfile={getUserProfile} user = {user}/>
                 <div className='py-20'>
                     <Tabs
                         tabBarGutter={50}
