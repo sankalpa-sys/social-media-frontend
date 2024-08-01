@@ -6,12 +6,40 @@ import {
 } from "@ant-design/icons";
 import {getUserName} from "../../utils.ts";
 import {useUser} from "../../context/userContext";
-import {useState} from "react";
-import {Modal} from "antd";
+import {useEffect, useLayoutEffect, useState} from "react";
+import {Button, Modal, Popconfirm} from "antd";
 import EditProfile from "./EditProfile.tsx";
+import {privateApi} from "../../api/api.ts";
+import {useToggleCurrentUser} from "../../context/toggleCurrentUser.ts";
 function ProfilePageHeader({user, getUserProfile}: {user: any, getUserProfile: ()=>void}) {
+    const {setToggler, toggler} = useToggleCurrentUser()
     const [openEditProfileModal, setOpenEditProfileModal] = useState<boolean>(false)
+    const [isFollowing, setIsFollowing] = useState<boolean>(false)
+    const [loading, setLoading] = useState<boolean>(false)
+    useLayoutEffect(()=> {
+        const isUserBeingFollowed = currentUser?.followings.includes(user?._id)
+        setIsFollowing(isUserBeingFollowed)
+    },[toggler])
     const {user: currentUser} = useUser()
+    const handleFollowActions = async() => {
+        setLoading(true)
+        try{
+             await privateApi({
+                url: `/follower/follow/${user._id}`,
+                data:{
+                    action: isFollowing ? "unfollow" : "follow",
+                },
+                method: "POST",
+            })
+            getUserProfile()
+            setToggler(!toggler)
+
+        }catch (e) {
+            console.log(e)
+        }finally {
+            setLoading(false)
+        }
+    }
     return (
        <div>
            <div className='flex items-center space-x-5'>
@@ -30,14 +58,26 @@ function ProfilePageHeader({user, getUserProfile}: {user: any, getUserProfile: (
                            </div>
                        ):(
                            <div className='flex items-center space-x-2'>
-                               <div className='flex items-center space-x-1 bg-cyan-600 max-w-fit px-2 py-1 rounded-md cursor-pointer'>
-                                   <p className='text-sm'>Following</p>
-                                   <DownOutlined style={{fontSize: "12px"}} />
-                               </div>
-                               <div className='flex items-center space-x-1 bg-teal-600 max-w-fit px-2 py-1 rounded-md cursor-pointer'>
-                                   <p className='text-sm'>Message</p>
-                                   <MessageOutlined style={{fontSize: "12px"}} />
-                               </div>
+                               {isFollowing ? (
+                                   <Popconfirm
+                                       title="Unfollow"
+                                       description="Are you sure to unfollow this user?"
+                                       onConfirm={handleFollowActions}
+                                       okText="Yes"
+                                       cancelText="No"
+                                   >
+                                       <Button loading={loading} disabled={loading} iconPosition='end' type='primary' danger icon={<DownOutlined/>}>
+                                           Unfollow
+                                       </Button>
+                                   </Popconfirm>
+                               ): (
+                                   <Button loading={loading} disabled={loading} onClick={handleFollowActions} iconPosition='end' type='primary' icon={<DownOutlined/>}>
+                                       Follow
+                                   </Button>
+                               )}
+                               <Button type='default' icon={<MessageOutlined/>}>
+                                   Message
+                               </Button>
                            </div>
                        )}
 

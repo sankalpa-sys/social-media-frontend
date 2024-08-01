@@ -33,6 +33,9 @@ function RightSidebar() {
     const handleFollow = async (id: any) => {
        try {
            await privateApi({
+               data: {
+                  action: "follow"
+               },
                method: "POST",
                url: `/follower/follow/${id}`
            })
