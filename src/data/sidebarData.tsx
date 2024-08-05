@@ -39,7 +39,7 @@ const sidebarData: TSideBarData[] = [
     {
         name: "Messages",
         icon: <MessageOutlined style={{fontSize: "25px"}} />,
-        route: "/"
+        route: "/inbox"
     },
     {
         name: "Notifications",

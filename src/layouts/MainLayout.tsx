@@ -5,7 +5,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 const MainLayout = () => {
     const location = useLocation();
     const currentPath = location.pathname;
-    const hideSidebarRoutes = ['/profile/:id'];
+    const hideSidebarRoutes = ['/profile/:id', '/inbox'];
     const shouldShowSidebar = !hideSidebarRoutes.some(route => {
         const regex = new RegExp(`^${route.replace(/:[^\s/]+/g, '([^/]+)')}$`);
         return regex.test(currentPath);

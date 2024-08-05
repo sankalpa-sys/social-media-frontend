@@ -10,6 +10,7 @@ import {useEffect, useState} from "react";
 import {privateApi} from "./api/api.ts";
 import {ToggleCurrentUser} from "./context/toggleCurrentUser.ts";
 import LoadingSpinner from "./components/LoadingSpinner/LoadingSpinner.tsx";
+import Inbox from "./pages/Inbox/Inbox";
 
 function App() {
     const [user, setUser] = useState(null)
@@ -51,6 +52,7 @@ function App() {
                        <Route element={<MainLayout />}>
                            <Route path="/" element={<ProtectedRoute element={<MainFeedSection />} user={user} />} />
                            <Route path="/profile/:id" element={<ProtectedRoute element={<UserProfile />} user={user} />} />
+                           <Route path="/inbox" element={<ProtectedRoute element={<Inbox />} user={user} />} />
                        </Route>
                    </Routes>
                </ToggleCurrentUser.Provider>
