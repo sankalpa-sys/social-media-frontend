@@ -1,6 +1,7 @@
 import {Empty} from "antd";
 import ConversationHeader from "./ConversationHeader";
 import ConversationFooter from "./ConversationFooter";
+import MainConversation from "./MainConversation";
 
 function Conversation() {
     const selectedConversation = "s";
@@ -13,8 +14,8 @@ function Conversation() {
     return (
         <div className='h-screen relative'>
             <ConversationHeader/>
-            <div className='flex-1 bg-red-400'>
-
+            <div className='h-[82vh]'>
+                <MainConversation/>
             </div>
             <ConversationFooter/>
         </div>

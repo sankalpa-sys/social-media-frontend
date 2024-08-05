@@ -1,0 +1,6 @@
+.sent {
+    @apply text-sm bg-blue-500 max-w-fit rounded-full px-2 py-2 ml-auto;
+}
+.received {
+    @apply text-sm bg-gray-700 max-w-fit rounded-full px-2 py-2;
+}
