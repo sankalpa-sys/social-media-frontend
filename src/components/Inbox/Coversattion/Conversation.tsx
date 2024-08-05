@@ -12,9 +12,9 @@ function Conversation() {
        </div>
     )
     return (
-        <div className='h-screen relative'>
+        <div className='h-screen flex flex-col'>
             <ConversationHeader/>
-            <div className='h-[82vh]'>
+            <div className='flex-grow overflow-y-auto flex flex-col-reverse no-scrollbar mt-10'>
                 <MainConversation/>
             </div>
             <ConversationFooter/>
