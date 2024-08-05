@@ -9,6 +9,7 @@ import LocationComponent from "./components/LocationComponent/LocationComponent.
 import {useEffect, useState} from "react";
 import {privateApi} from "./api/api.ts";
 import {ToggleCurrentUser} from "./context/toggleCurrentUser.ts";
+import LoadingSpinner from "./components/LoadingSpinner/LoadingSpinner.tsx";
 
 function App() {
     const [user, setUser] = useState(null)
@@ -33,6 +34,11 @@ function App() {
         }
         getUserProfile()
     },[toggler])
+    if(loading) return (
+        <div className='bg-black h-screen flex items-center justify-center text-white'>
+            <LoadingSpinner title="Please wait..."/>
+        </div>
+    )
     return (
 
         <Router>

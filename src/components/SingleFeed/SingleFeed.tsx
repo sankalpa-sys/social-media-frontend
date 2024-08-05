@@ -15,6 +15,7 @@ import { useRef } from 'react';
 import useDoubleClick from 'use-double-click';
 import PostLikes from "../PostLikes/PostLikes";
 import {useNavigate} from "react-router-dom";
+import PostDetails from "../PostDetails/PostDetails.tsx";
 
 function SingleFeed({feed, setFeeds}: {feed: any, setFeeds: any}) {
     const navigator = useNavigate()
@@ -23,6 +24,7 @@ function SingleFeed({feed, setFeeds}: {feed: any, setFeeds: any}) {
     const [openFeedSettingsModal, setOpenFeedSettingsModal] = useState<boolean>(false);
     const [openLikeModal, setOpenLikeModal] = useState<boolean>(false);
     const [deleting, setDeleting] = useState<boolean>(false);
+    const [openFeedDetails, setOpenFeedDetails] = useState<boolean>(false);
     const handleDelete = async () => {
        if(deleting) return;
         setDeleting(true)
@@ -107,7 +109,7 @@ function SingleFeed({feed, setFeeds}: {feed: any, setFeeds: any}) {
                     <CheckCircleFilled className='text-blue-600' style={{fontSize: "10px"}} />
                     <p className='text-xs'>{feed?.desc}</p>
                 </div>
-                <p className='text-gray-400 text-xs py-1'>View all 3 comments</p>
+                <p onClick={()=>setOpenFeedDetails(true)} className='text-gray-400 text-xs py-1 hover:underline hover:opacity-95 cursor-pointer'>View all {feed?.comments?.length ?? 0} comments</p>
                 <p className='text-gray-400 text-xs'>Add a comment...</p>
             </div>
 
@@ -149,6 +151,10 @@ function SingleFeed({feed, setFeeds}: {feed: any, setFeeds: any}) {
                     </div>
                 </Modal>
 
+            )}
+
+            {openFeedDetails && (
+                <PostDetails post={feed} openModal={openFeedDetails} closeModal={()=>setOpenFeedDetails(false)} postId='2334'/>
             )}
 
         </div>

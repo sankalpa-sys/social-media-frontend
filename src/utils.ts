@@ -1,7 +1,7 @@
 import {privateApi} from "./api/api";
 
 export const getUserName = (fullName: string): string => {
-    return `_${fullName?.toLowerCase()?.split(" ").join("_")}`
+    return `${fullName?.toLowerCase()?.split(" ").join("_")}`
 }
 
 import { DateTime } from 'luxon';
