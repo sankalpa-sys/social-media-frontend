@@ -53,11 +53,6 @@ const sidebarData: TSideBarData[] = [
         route: "/"
     },
 
-    {
-        name: "Create",
-        icon: <PlusSquareOutlined style={{fontSize: "25px"}} />,
-    },
-
 ]
 
 const sidebarData2: TSideBarData[] = [{
