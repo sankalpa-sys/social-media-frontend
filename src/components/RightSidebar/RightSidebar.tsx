@@ -49,7 +49,7 @@ function RightSidebar() {
     }
 
     if(loading) return (
-        <div className='hidden md:block col-span-3 py-10 pr-10 pl-5 flex space-x-2'>
+        <div className='hidden md:flex col-span-3 py-10 pr-10 pl-5 space-x-2'>
 
               <div className='h-10 w-10 animate-pulse bg-gray-500 rounded-full shrink-0'/>
               <div className='space-y-1 w-full'>
