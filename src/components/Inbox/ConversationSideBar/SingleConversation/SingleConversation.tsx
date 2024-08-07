@@ -1,4 +1,5 @@
 import {useUser} from "../../../../context/userContext";
+import {getUserName} from "../../../../utils.ts";
 
 function SingleConversation({conversation}) {
     const {user} = useUser()
@@ -9,7 +10,7 @@ function SingleConversation({conversation}) {
                  className='h-12 w-12 rounded-full object-cover' alt=""/>
             <div>
                 <h1 className='text-white text-sm font-semibold'>{messagingPartner?.name}</h1>
-                <p className='text-gray-400 text-xs'>Hello, how are you?</p>
+                <p className='text-gray-400 text-xs'>{getUserName(messagingPartner?.name)}</p>
             </div>
         </div>
     );
