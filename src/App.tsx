@@ -57,7 +57,7 @@ function App() {
                    </Routes>
                </ToggleCurrentUser.Provider>
             </UserContext.Provider>
-            <LocationComponent/>
+            {/*<LocationComponent/>*/}
         </Router>
     );
 }

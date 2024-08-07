@@ -2,13 +2,49 @@ import {Empty} from "antd";
 import ConversationHeader from "./ConversationHeader";
 import ConversationFooter from "./ConversationFooter";
 import MainConversation from "./MainConversation";
-import {useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {privateApi} from "../../../api/api.ts";
+import {io} from "socket.io-client";
+import {useUser} from "../../../context/userContext.ts";
 
 function Conversation({selectedConversation}) {
+    const {user} = useUser()
+    const chatFriend = selectedConversation?.members.find((item: any)=>item._id !== user._id)
     const [messages, setMessages] = useState([])
     const [fetching, setFetching] = useState<boolean>(false)
     const [fetchError, setFetchError] = useState<string>("")
+    const [arrivalMessage, setArrivalMessage] = useState(null)
+    const socket = useRef()
+
+    useEffect(()=> {
+        socket.current = io("ws://localhost:8900")
+        socket.current.on("getMessage", (data: any): void => {
+            setArrivalMessage({
+                sender: data?.senderId ,
+                text: data?.text,
+                createdAt: Date.now()
+            })
+        })
+    },[])
+
+   useEffect(()=> {
+       arrivalMessage && (
+           // @ts-ignore
+           setMessages((prev)=>[...prev, {
+               conversationId: selectedConversation?._id,
+               sender: arrivalMessage?.sender,
+               text: arrivalMessage?.text,
+               createdAt: arrivalMessage?.createdAt
+           }])
+       )
+   },[arrivalMessage])
+
+    useEffect(()=> {
+        socket.current.emit("addUser",user._id)
+        socket.current.on("getUsers", users=> {
+        })
+    },[user])
+
 
     const getMessages = async() => {
         setFetching(true)
@@ -30,8 +66,6 @@ function Conversation({selectedConversation}) {
     const addMessages = (newMessage) => {
         setMessages(prevState => [...prevState, newMessage])
     }
-
-    console.log("selectedConversation", selectedConversation)
     if(!selectedConversation) return (
        <div className='h-screen flex  flex-col items-center justify-center'>
            <Empty />
@@ -40,11 +74,11 @@ function Conversation({selectedConversation}) {
     )
     return (
         <div className='h-screen flex flex-col'>
-            <ConversationHeader selectedConversation={selectedConversation}/>
+            <ConversationHeader chatFriend={chatFriend} selectedConversation={selectedConversation}/>
             <div className='flex-grow overflow-y-auto flex flex-col-reverse no-scrollbar mt-10'>
                 <MainConversation messages={messages} fetching={fetching} getMessages={getMessages}  selectedConversation={selectedConversation}/>
             </div>
-            <ConversationFooter addMessages={addMessages} selectedConversation={selectedConversation}/>
+            <ConversationFooter socket={socket} chatFriend={chatFriend} addMessages={addMessages} selectedConversation={selectedConversation}/>
         </div>
     );
 }

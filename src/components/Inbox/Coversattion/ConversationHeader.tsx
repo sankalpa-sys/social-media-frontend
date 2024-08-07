@@ -1,10 +1,8 @@
 import {InfoCircleOutlined, PhoneOutlined, VideoCameraOutlined} from "@ant-design/icons";
 import {useUser} from "../../../context/userContext.ts";
 
-function ConversationHeader({selectedConversation}) {
+function ConversationHeader({selectedConversation, chatFriend}) {
     const {user} = useUser()
-    const chatFriend = selectedConversation?.members.filter((item: any)=>item._id !== user._id)[0]
-    console.log("chat friend", chatFriend)
     return (
         <div className='flex items-center justify-between p-5 border-b'>
             <div className='flex items-center space-x-2'>

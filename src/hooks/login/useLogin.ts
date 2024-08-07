@@ -25,7 +25,11 @@ export const useLogin = (): IReturnType => {
                 method: "POST",
                 url: "/auth/login"
             })
-            localStorage.setItem("auth-token", res.data)
+           try{
+               localStorage.setItem("auth-token", res?.data)
+           }catch (e) {
+               console.log("cannot update local storage")
+           }
             window.location.reload()
         }catch (e: any) {
             setError(e?.response.data)

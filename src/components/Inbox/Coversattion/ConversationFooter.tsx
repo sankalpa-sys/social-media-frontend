@@ -1,13 +1,19 @@
 import {AudioOutlined, FileImageOutlined, HeartOutlined, MehOutlined} from "@ant-design/icons";
-import {useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {privateApi} from "../../../api/api.ts";
 import {useUser} from "../../../context/userContext.ts";
+import {io} from "socket.io-client";
 
-function ConversationFooter({selectedConversation, addMessages}) {
+function ConversationFooter({selectedConversation, addMessages, chatFriend, socket}) {
     const {user} = useUser()
     const [chat, setChat] = useState<string>("")
     const handleSendMessage = async(e) => {
         e.preventDefault()
+        socket.current.emit("sendMessage",{
+            senderId: user._id,
+            receiverId: chatFriend?._id,
+            text: chat
+        })
         try{
             const res = await privateApi({
                 url: "/message",
