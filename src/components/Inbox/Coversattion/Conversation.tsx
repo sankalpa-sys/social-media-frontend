@@ -28,16 +28,15 @@ function Conversation({selectedConversation}) {
     },[])
 
    useEffect(()=> {
-       arrivalMessage && (
+       arrivalMessage &&(
            // @ts-ignore
            setMessages((prev)=>[...prev, {
-               conversationId: selectedConversation?._id,
                sender: arrivalMessage?.sender,
                text: arrivalMessage?.text,
                createdAt: arrivalMessage?.createdAt
            }])
        )
-   },[arrivalMessage])
+   },[arrivalMessage, selectedConversation])
 
     useEffect(()=> {
         socket.current.emit("addUser",user._id)
