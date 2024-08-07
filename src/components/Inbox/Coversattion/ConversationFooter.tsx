@@ -3,7 +3,7 @@ import {useState} from "react";
 import {privateApi} from "../../../api/api.ts";
 import {useUser} from "../../../context/userContext.ts";
 
-function ConversationFooter({selectedConversation}) {
+function ConversationFooter({selectedConversation, addMessages}) {
     const {user} = useUser()
     const [chat, setChat] = useState<string>("")
     const handleSendMessage = async(e) => {
@@ -18,7 +18,7 @@ function ConversationFooter({selectedConversation}) {
                     text: chat
                 }
             })
-            console.log("res", res.data)
+            addMessages(res.data)
             setChat("")
         }catch (e) {
             console.log(e)

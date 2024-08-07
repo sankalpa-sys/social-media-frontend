@@ -1,8 +1,10 @@
 import {sidebarData, sidebarData2} from "../../data/sidebarData.tsx";
 import {useNavigate} from "react-router-dom";
+import {useUser} from "../../context/userContext.ts";
 
 function Sidebar() {
     const navigator = useNavigate()
+    const {user} = useUser()
     return (
         <div className='hidden md:block border-r-[0.5px] border-gray-500 px-5 col-span-2 h-screen'>
             <div>
@@ -16,7 +18,12 @@ function Sidebar() {
                             <p>{item.name}</p>
                         </div>
                     ))}
+                    <div onClick={()=>navigator(`/profile/${user._id}`)} className='flex items-center space-x-3 hover:bg-white/20 cursor-pointer px-3 py-2 rounded-sm'>
+                        <img className='h-8 w-8 rounded-full object-cover' src={user?.profilePicture} alt=""/>
+                        <p>Profile</p>
+                    </div>
                 </div>
+
                 <div className='space-y-4'>
                     {sidebarData2.map((item)=> (
                         <div onClick={!item?.route ? item.clickHandler :()=>navigator(item?.route)} key={item.name} className='flex items-center space-x-3 hover:bg-white/20 cursor-pointer px-3 py-2 rounded-sm'>
