@@ -11,16 +11,20 @@ import {Button, Modal, Popconfirm} from "antd";
 import EditProfile from "./EditProfile.tsx";
 import {privateApi} from "../../api/api.ts";
 import {useToggleCurrentUser} from "../../context/toggleCurrentUser.ts";
+import {useNavigate} from "react-router-dom";
 function ProfilePageHeader({user, getUserProfile}: {user: any, getUserProfile: ()=>void}) {
     const {setToggler, toggler} = useToggleCurrentUser()
     const [openEditProfileModal, setOpenEditProfileModal] = useState<boolean>(false)
     const [isFollowing, setIsFollowing] = useState<boolean>(false)
     const [loading, setLoading] = useState<boolean>(false)
+    const {user: currentUser} = useUser()
+    const navigator = useNavigate()
+
     useLayoutEffect(()=> {
         const isUserBeingFollowed = currentUser?.followings.includes(user?._id)
         setIsFollowing(isUserBeingFollowed)
     },[toggler])
-    const {user: currentUser} = useUser()
+
     const handleFollowActions = async() => {
         setLoading(true)
         try{
@@ -38,6 +42,25 @@ function ProfilePageHeader({user, getUserProfile}: {user: any, getUserProfile: (
             console.log(e)
         }finally {
             setLoading(false)
+        }
+    }
+
+    const handleMessage = async () => {
+        try{
+            await privateApi({
+                url: '/conversation',
+                method: "POST",
+                data: {
+                    senderId: currentUser?._id,
+                    receiverId: user?._id
+                }
+            })
+            navigator("/inbox")
+        }catch (e) {
+            console.log(e)
+           if(e?.response?.data?.redirect){
+               navigator("/inbox")
+           }
         }
     }
     return (
@@ -75,7 +98,7 @@ function ProfilePageHeader({user, getUserProfile}: {user: any, getUserProfile: (
                                        Follow
                                    </Button>
                                )}
-                               <Button type='default' icon={<MessageOutlined/>}>
+                               <Button onClick={handleMessage} type='default' icon={<MessageOutlined/>}>
                                    Message
                                </Button>
                            </div>

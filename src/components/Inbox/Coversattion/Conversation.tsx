@@ -17,7 +17,7 @@ function Conversation({selectedConversation}) {
     const socket = useRef()
 
     useEffect(()=> {
-        socket.current = io("ws://localhost:8900")
+        socket.current = io(import.meta.env.VITE_SOCKET_URL)
         socket.current.on("getMessage", (data: any): void => {
             setArrivalMessage({
                 sender: data?.senderId ,
@@ -36,7 +36,7 @@ function Conversation({selectedConversation}) {
                createdAt: arrivalMessage?.createdAt
            }])
        )
-   },[arrivalMessage, selectedConversation])
+   },[arrivalMessage, selectedConversation, socket])
 
     useEffect(()=> {
         socket.current.emit("addUser",user._id)
