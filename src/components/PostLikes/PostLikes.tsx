@@ -1,10 +1,10 @@
 import {privateApi} from "../../api/api";
 import {useEffect, useState} from "react";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
-import {Divider, Empty} from "antd";
+import { Empty} from "antd";
 import UserCard from "../UserCard/UserCard";
 
-function PostLikes({id}) {
+function PostLikes({id}: {id: string}) {
     const [likes, setLikes] = useState<any>([])
     const [loading, setLoading] = useState<boolean>(true)
     const [error, setError] = useState<string>("")
@@ -22,7 +22,7 @@ function PostLikes({id}) {
                     url: `/post/likes/${id}`
                 })
                 setLikes(res?.data)
-            }catch (e) {
+            }catch (e: any) {
                 setError(e.message)
             }finally {
                 setLoading(false)
@@ -48,7 +48,7 @@ function PostLikes({id}) {
     </div>
     return (
         <div className='pb-10 space-y-3'>
-            {likes.map((user)=> (
+            {likes.map((user: any)=> (
                 <div>
                     <UserCard user={user} handleFollow={followHandler} showFollow={false} subLabel="New to instaclone"/>
                 </div>

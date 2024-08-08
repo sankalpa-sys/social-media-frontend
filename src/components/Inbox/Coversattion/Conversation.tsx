@@ -81,7 +81,7 @@ function Conversation({selectedConversation}: {selectedConversation: any}) {
     )
     return (
         <div className='h-screen flex flex-col'>
-            <ConversationHeader chatFriend={chatFriend} selectedConversation={selectedConversation}/>
+            <ConversationHeader chatFriend={chatFriend}/>
             <div className='flex-grow overflow-y-auto flex flex-col-reverse no-scrollbar mt-10'>
                 <MainConversation messages={messages} fetching={fetching} getMessages={getMessages}  selectedConversation={selectedConversation}/>
             </div>

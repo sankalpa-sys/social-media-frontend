@@ -7,7 +7,7 @@ const api = axios.create({
     baseURL: BASE_URL,
 });
 
-const privateApi = async (options) => {
+const privateApi = async (options: any) => {
     const token = localStorage.getItem("auth-token");
     if (token) {
         options.headers = {
@@ -18,7 +18,7 @@ const privateApi = async (options) => {
     return api(options);
 };
 
-const publicApi = (options) => {
+const publicApi = (options: any) => {
     return api(options);
 };
 

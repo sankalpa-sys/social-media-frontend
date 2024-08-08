@@ -3,8 +3,9 @@ import ImageUpload from "../ImageUpload/ImageUpload.tsx";
 import {useState} from "react";
 import {UploadOutlined} from "@ant-design/icons";
 import {privateApi} from "../../api/api.ts";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner.tsx";
 
-function EditProfile({user, getUserProfile, setOpenEditProfileModal}) {
+function EditProfile({user, getUserProfile, setOpenEditProfileModal}: any) {
 const [imageUrl, setImageUrl] = useState<string>(user?.profilePicture)
     const [loading, setLoading] = useState<boolean>(false)
     const [error, setError] = useState<string>("")
@@ -21,7 +22,7 @@ const [imageUrl, setImageUrl] = useState<string>(user?.profilePicture)
     const onFinish: FormProps['onFinish'] = async (values) => {
     setLoading(true)
        try{
-           const res = await privateApi({
+           await privateApi({
                url: `/user/${user?._id}`,
                method: "PUT",
                data: {
@@ -32,16 +33,23 @@ const [imageUrl, setImageUrl] = useState<string>(user?.profilePicture)
            })
            setOpenEditProfileModal(false)
            getUserProfile()
-       }catch (e) {
+       }catch (e: any) {
            setError(e)
        }finally {
            setLoading(false)
        }
     };
 
+
     const onFinishFailed: FormProps['onFinishFailed'] = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
+    if(loading) return (
+        <LoadingSpinner title='loading...'/>
+    )
+    if(error) return (
+        <p>Error!!</p>
+    )
     return (
         <div className='text-white'>
             <h1 className='text-lg font-semibold pb-4'>Edit Profile</h1>

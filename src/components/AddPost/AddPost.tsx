@@ -7,15 +7,13 @@ import {useUser} from "../../context/userContext";
 
 
 function AddPost({setFeeds}:{setFeeds: any}) {
-    const location = JSON.parse(localStorage.getItem("location")) || {
-        country: "",
-        city: ""
-    }
+    const locationString = localStorage.getItem("location");
+    const location = locationString ? JSON.parse(locationString) : { country: "", city: "" };
     const { TextArea } = Input;
     const {user} = useUser()
     const[inputValue, setInputValue] = useState<string>("")
-    const [imageUrl, setImageUrl] = useState(null);
-    const handleChange = (e) => {
+    const [imageUrl, setImageUrl] = useState<string>("");
+    const handleChange = (e: any) => {
         setInputValue(e.target.value)
     }
     const handleClick = async () => {
@@ -30,9 +28,9 @@ function AddPost({setFeeds}:{setFeeds: any}) {
                 method: "POST",
                 url: "/post/create"
             })
-            setFeeds((prevFeeds) => [res.data, ...prevFeeds])
+            setFeeds((prevFeeds: any) => [res.data, ...prevFeeds])
             setInputValue("")
-            setImageUrl(null)
+            setImageUrl("")
         }catch (e) {
             console.log(e)
         }

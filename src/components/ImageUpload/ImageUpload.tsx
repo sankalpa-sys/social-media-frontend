@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import {useState, useRef} from "react";
 import { LoadingOutlined } from "@ant-design/icons";
 import axios from "axios";
 import heic2any from 'heic2any';
@@ -8,7 +8,7 @@ interface ImageUploadProps {
     children: React.ReactNode;
 }
 
-const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUpload, children }) => {
+const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUpload, children }: {onImageUpload: any, children: any}) => {
     const [uploading, setUploading] = useState<boolean>(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
 

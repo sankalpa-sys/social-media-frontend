@@ -4,7 +4,7 @@ import {Empty} from "antd";
 
 interface IProps{
     handleSelectConversation: any,
-    conversations: [],
+    conversations: any,
     gettingConversations: boolean,
     conversationError: any
 }

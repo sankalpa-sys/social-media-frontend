@@ -8,7 +8,7 @@ export const useRegister = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
 
-    const handleRegister = async(formData: IRegisterFormData, imageUrl) => {
+    const handleRegister = async(formData: IRegisterFormData, imageUrl: string) => {
         try{
             setError("")
             setLoading(true);
