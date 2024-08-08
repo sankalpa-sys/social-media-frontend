@@ -32,7 +32,7 @@ function AddPost({setFeeds}:{setFeeds: any}) {
             setInputValue("")
             setImageUrl("")
         }catch (e) {
-            console.log(e)
+            console.log("error",e)
         }
     }
     return (
