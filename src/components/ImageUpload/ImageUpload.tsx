@@ -15,13 +15,15 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUpload, children }) =>
     const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         setUploading(true);
         try {
-            let file = e.target.files[0];
+            // @ts-ignore
+            let file: any = e.target.files[0];
             // Convert .heic to .jpeg or .png
             if (file.type === 'image/heic') {
                 const blob = await heic2any({
                     blob: file,
                     toType: 'image/jpeg',
                 });
+                // @ts-ignore
                 file = new File([blob], file.name.replace(/\.heic$/, '.jpg'), { type: 'image/jpeg' });
             }
             const formData = new FormData();

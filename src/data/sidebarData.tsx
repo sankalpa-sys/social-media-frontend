@@ -6,7 +6,6 @@ import {
     SearchOutlined, StrikethroughOutlined,
     VideoCameraOutlined
 } from "@ant-design/icons";
-import {useUser} from "../context/userContext.ts";
 
 type TSideBarData = {
     name: string;

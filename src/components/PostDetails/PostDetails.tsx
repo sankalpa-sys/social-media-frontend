@@ -3,7 +3,6 @@ import {
     CheckCircleFilled,
     CommentOutlined,
     EllipsisOutlined, FireOutlined,
-    HeartFilled,
     HeartOutlined,
     SendOutlined
 } from "@ant-design/icons";
@@ -16,13 +15,13 @@ import LoadingSpinner from "../LoadingSpinner/LoadingSpinner.tsx";
 
 function PostDetails({openModal, closeModal, post}:{openModal: boolean, closeModal: ()=>void, post: any}) {
     const navigator = useNavigate()
-    const [comments, setComments] = useState([])
+    const [comments, setComments] = useState<any>([])
     const [gettingComments, setGettingComments] = useState<boolean>(false)
     const [error, setError] = useState<string>("")
     const [inputValue, setInputValue] = useState<string>("")
     const [addingComment, setAddingComment] = useState<boolean>(false)
 
-    const handleChange = (e) => {
+    const handleChange = (e:any) => {
         setInputValue(e.target.value)
     }
 
@@ -36,6 +35,7 @@ function PostDetails({openModal, closeModal, post}:{openModal: boolean, closeMod
                     comment: inputValue
                 }
             })
+            // @ts-ignore
             setComments((prevState)=> {
                 return [...prevState, res.data]
             })
@@ -55,7 +55,7 @@ function PostDetails({openModal, closeModal, post}:{openModal: boolean, closeMod
                  method: "GET"
              })
              setComments(res?.data)
-         }catch (e) {
+         }catch (e:any) {
              setError(e.message)
          }finally {
              setGettingComments(false)
@@ -63,6 +63,13 @@ function PostDetails({openModal, closeModal, post}:{openModal: boolean, closeMod
         }
         getComments()
     },[])
+    if(error){
+        return (
+            <div>
+                error
+            </div>
+        )
+    }
     return (
         <div>
                 <Modal style={{left: "100px"}} className='post_details' width='1200px' footer={null} onCancel={closeModal} open={openModal} centered>
@@ -93,7 +100,7 @@ function PostDetails({openModal, closeModal, post}:{openModal: boolean, closeMod
                               {gettingComments ? (
                                   <LoadingSpinner title='Please wait'/>
                               ): <div className='space-y-4'>
-                                  {comments.map((comment)=> (
+                                  {comments.map((comment: any)=> (
                                       <CommentCard key={comment._id} comment={comment}/>
                                   ))}
                               </div> }

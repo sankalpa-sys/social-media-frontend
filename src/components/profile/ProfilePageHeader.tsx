@@ -6,7 +6,7 @@ import {
 } from "@ant-design/icons";
 import {getUserName} from "../../utils.ts";
 import {useUser} from "../../context/userContext";
-import {useEffect, useLayoutEffect, useState} from "react";
+import {useLayoutEffect, useState} from "react";
 import {Button, Modal, Popconfirm} from "antd";
 import EditProfile from "./EditProfile.tsx";
 import {privateApi} from "../../api/api.ts";
@@ -56,7 +56,7 @@ function ProfilePageHeader({user, getUserProfile}: {user: any, getUserProfile: (
                 }
             })
             navigator("/inbox")
-        }catch (e) {
+        }catch (e:any) {
             console.log(e)
            if(e?.response?.data?.redirect){
                navigator("/inbox")
@@ -64,8 +64,8 @@ function ProfilePageHeader({user, getUserProfile}: {user: any, getUserProfile: (
         }
     }
     return (
-       <div>
-           <div className='flex items-center space-x-5'>
+       <>
+           <div className='flex flex-col md:flex-row items-center md:space-x-5 space-y-5'>
                <div className='h-48 w-48 rounded-full'>
                    <img className="h-full w-full rounded-full object-cover" src={user?.profilePicture} alt=""/>
                </div>
@@ -117,11 +117,11 @@ function ProfilePageHeader({user, getUserProfile}: {user: any, getUserProfile: (
 
            </div>
            {openEditProfileModal && (
-               <Modal footer={null} centered open={openEditProfileModal} onCancel={()=>setOpenEditProfileModal(false)}>
+               <Modal footer={null} style={{left:"75px"}} centered open={openEditProfileModal} onCancel={()=>setOpenEditProfileModal(false)}>
                   <EditProfile setOpenEditProfileModal={setOpenEditProfileModal} getUserProfile={getUserProfile} user={user}/>
                </Modal>
            )}
-       </div>
+       </>
     );
 }
 

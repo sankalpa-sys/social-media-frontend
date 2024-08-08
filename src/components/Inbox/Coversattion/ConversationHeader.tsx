@@ -1,13 +1,11 @@
 import {InfoCircleOutlined, PhoneOutlined, VideoCameraOutlined} from "@ant-design/icons";
-import {useUser} from "../../../context/userContext.ts";
 
-function ConversationHeader({selectedConversation, chatFriend}) {
-    const {user} = useUser()
+function ConversationHeader({ chatFriend}: {chatFriend: any}) {
     return (
         <div className='flex items-center justify-between p-5 border-b'>
             <div className='flex items-center space-x-2'>
-                <img className='h-12 w-12 rounded-full object-cover' src={chatFriend?.profilePicture} alt=""/>
-                <p className='font-semibold'>{chatFriend?.name}</p>
+                <img className='md:size-12 size-8 rounded-full object-cover' src={chatFriend?.profilePicture} alt=""/>
+                <p className='font-semibold md:text-base text-sm'>{chatFriend?.name}</p>
             </div>
 
             <div className='flex items-center space-x-5'>

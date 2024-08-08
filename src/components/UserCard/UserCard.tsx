@@ -1,7 +1,7 @@
 import {getUserName} from "../../utils";
 import {useNavigate} from "react-router-dom";
 
-function UserCard({user, handleFollow, subLabel, showFollow=true}) {
+function UserCard({user, handleFollow, subLabel, showFollow=true}: {user:any, handleFollow:any, subLabel:string, showFollow: boolean}) {
     const navigator = useNavigate()
 
     return (

@@ -13,7 +13,7 @@ function Sidebar() {
             <div className='flex flex-col space-y-14'>
                 <div className='space-y-4'>
                     {sidebarData.map((item)=> (
-                        <div onClick={!item?.route ? item.clickHandler :()=>navigator(item?.route)} key={item.name} className='flex items-center space-x-3 hover:bg-white/20 cursor-pointer px-3 py-2 rounded-sm'>
+                        <div onClick={!item?.route ? item.clickHandler :()=>navigator(item?.route as string)} key={item.name} className='flex items-center space-x-3 hover:bg-white/20 cursor-pointer px-3 py-2 rounded-sm'>
                             {item.icon}
                             <p>{item.name}</p>
                         </div>
@@ -26,7 +26,7 @@ function Sidebar() {
 
                 <div className='space-y-4'>
                     {sidebarData2.map((item)=> (
-                        <div onClick={!item?.route ? item.clickHandler :()=>navigator(item?.route)} key={item.name} className='flex items-center space-x-3 hover:bg-white/20 cursor-pointer px-3 py-2 rounded-sm'>
+                        <div onClick={!item?.route ? item.clickHandler :()=>navigator(item?.route as string)} key={item.name} className='flex items-center space-x-3 hover:bg-white/20 cursor-pointer px-3 py-2 rounded-sm'>
                             {item.icon}
                             <p>{item.name}</p>
                         </div>

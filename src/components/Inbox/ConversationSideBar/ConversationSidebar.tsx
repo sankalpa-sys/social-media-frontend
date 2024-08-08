@@ -1,9 +1,15 @@
 import SingleConversation from "./SingleConversation/SingleConversation";
 import React from "react";
-import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner.tsx";
 import {Empty} from "antd";
 
-function ConversationSidebar({handleSelectConversation,conversations, gettingConversations, conversationError}) {
+interface IProps{
+    handleSelectConversation: any,
+    conversations: [],
+    gettingConversations: boolean,
+    conversationError: any
+}
+
+function ConversationSidebar({handleSelectConversation,conversations, gettingConversations, conversationError}:IProps) {
     console.log("conversations",conversations)
     if(gettingConversations) return (
         <>
@@ -14,7 +20,7 @@ function ConversationSidebar({handleSelectConversation,conversations, gettingCon
                     <div className='h-4 w-1/2 bg-gray-500 animate-pulse rounded-full'/>
                 </div>
             </div>
-            <div className='w-full flex justify-start pt-4 px-5'>
+            <div className='w-full hidden md:flex justify-start pt-4 px-5'>
                 <div className='h-10 w-10 animate-pulse bg-gray-500 rounded-full shrink-0'/>
                 <div className='space-y-1 w-full'>
                     <div className='h-4 w-3/4 bg-gray-500 animate-pulse rounded-full'/>
@@ -38,12 +44,12 @@ function ConversationSidebar({handleSelectConversation,conversations, gettingCon
     )
     return (
         <div className='h-screen border-r overflow-y-scroll no-scrollbar'>
-            <div className="header flex justify-between items-center px-5 py-10">
-                <h1 className="text-lg font-semibold">Messages</h1>
-                <p className='text-gray-400'>Requests</p>
+            <div className="header flex justify-between items-center px-1 md:px-5 py-10">
+                <h1 className="text-sm md:text-lg font-semibold">Messages</h1>
+                <p className='text-gray-400 hidden md:block'>Requests</p>
             </div>
            <div className="conversations mt-8 space-y-3">
-               {conversations.map((conversation, index)=> (
+               {conversations.map((conversation:any, index:any)=> (
                   <React.Fragment key={index}>
                      <div onClick={()=>handleSelectConversation(conversation)}>
                          <SingleConversation conversation={conversation}/>

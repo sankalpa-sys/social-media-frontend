@@ -1,6 +1,13 @@
 import {createContext, useContext} from "react";
 
-export const UserContext = createContext(undefined);
+type IUser = {
+    user: any
+    setUser: (value: any) => void;
+    loading: boolean;
+    error: string;
+}
+
+export const UserContext = createContext<IUser | undefined>(undefined);
 
 export const useUser = () => {
     const context = useContext(UserContext);

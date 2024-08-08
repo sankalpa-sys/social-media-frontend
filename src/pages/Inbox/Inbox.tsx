@@ -18,7 +18,7 @@ function Inbox() {
                   method: 'GET',
               })
               setConversations(res.data)
-          }catch (e) {
+          }catch (e: any) {
                 setConversationError(e.response.data.message)
           }finally {
                 setGettingConversations(false)
@@ -32,10 +32,10 @@ function Inbox() {
     }, []);
     return (
         <div className='grid grid-cols-10'>
-           <div className='col-span-3'>
+           <div className='md:col-span-3 col-span-2'>
                <ConversationSidebar handleSelectConversation={handleSelectConversation} conversations={conversations} gettingConversations={gettingConversations} conversationError={conversationError} />
            </div>
-            <div className='col-span-7'>
+            <div className='md:col-span-7 col-span-8'>
                 <Conversation selectedConversation={selectedConversation}/>
             </div>
         </div>

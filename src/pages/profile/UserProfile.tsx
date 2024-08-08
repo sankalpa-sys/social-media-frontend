@@ -10,7 +10,7 @@ import {privateApi} from "../../api/api.ts";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner.tsx";
 
 function UserProfile() {
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState<any>(null)
     const [loading, setLoading] = useState<boolean>(false)
     const [error, setError] = useState<string>("")
     const params = useParams()
@@ -22,7 +22,7 @@ function UserProfile() {
                 url:`/user/${params.id}`
             })
             setUser(res.data)
-        }catch (e) {
+        }catch (e: any) {
             setError(e.message)
         }finally {
             setLoading(false)
@@ -43,10 +43,17 @@ function UserProfile() {
             </div>
         </div>
     )
+    if(error){
+        return (
+            <div>
+                error
+            </div>
+        )
+    }
     return (
             <div className='bg-black text-white h-screen max-w-3xl mx-auto pt-10 overflow-y-scroll scrollbar-hide pb-5'>
                 <ProfilePageHeader getUserProfile={getUserProfile} user = {user}/>
-                <div className='py-20'>
+                <div className='md:py-20 pt-10  px-5 md:px-0'>
                     <Tabs
                         tabBarGutter={50}
                         style={{backgroundColor: "black", color: "white"}}

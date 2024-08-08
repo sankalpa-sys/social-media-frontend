@@ -7,14 +7,14 @@ import {privateApi} from "../../../api/api.ts";
 import {io} from "socket.io-client";
 import {useUser} from "../../../context/userContext.ts";
 
-function Conversation({selectedConversation}) {
+function Conversation({selectedConversation}: {selectedConversation: any}) {
     const {user} = useUser()
     const chatFriend = selectedConversation?.members.find((item: any)=>item._id !== user._id)
     const [messages, setMessages] = useState([])
     const [fetching, setFetching] = useState<boolean>(false)
     const [fetchError, setFetchError] = useState<string>("")
-    const [arrivalMessage, setArrivalMessage] = useState(null)
-    const socket = useRef()
+    const [arrivalMessage, setArrivalMessage] = useState<any>(null)
+    const socket = useRef<any>()
 
     useEffect(()=> {
         socket.current = io(import.meta.env.VITE_SOCKET_URL)
@@ -40,7 +40,8 @@ function Conversation({selectedConversation}) {
 
     useEffect(()=> {
         socket.current.emit("addUser",user._id)
-        socket.current.on("getUsers", users=> {
+        socket.current.on("getUsers", (users: any)=> {
+            console.log("users", users)
         })
     },[user])
 
@@ -62,7 +63,8 @@ function Conversation({selectedConversation}) {
         }
     }
 
-    const addMessages = (newMessage) => {
+    const addMessages = (newMessage:any) => {
+        // @ts-ignore
         setMessages(prevState => [...prevState, newMessage])
     }
     if(!selectedConversation) return (
@@ -70,6 +72,12 @@ function Conversation({selectedConversation}) {
            <Empty />
            <p>No conversation selected</p>
        </div>
+    )
+
+    if(fetchError) return (
+        <div>
+            error!
+        </div>
     )
     return (
         <div className='h-screen flex flex-col'>

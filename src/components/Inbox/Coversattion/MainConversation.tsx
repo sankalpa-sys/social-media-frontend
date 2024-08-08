@@ -1,9 +1,15 @@
 import './Conversation.css'
-import {useEffect, useState} from "react";
-import {privateApi} from "../../../api/api.ts";
+import {useEffect} from "react";
 import {useUser} from "../../../context/userContext.ts";
 import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner.tsx";
-function MainConversation({selectedConversation, getMessages, fetching, messages}) {
+
+interface IProps{
+    selectedConversation:any,
+    getMessages: any,
+    fetching:any,
+    messages:any
+}
+function MainConversation({selectedConversation, getMessages, fetching, messages}: IProps) {
     const {user} = useUser()
     useEffect(()=> {
         getMessages()
@@ -15,7 +21,7 @@ function MainConversation({selectedConversation, getMessages, fetching, messages
     )
     return (
         <div className='space-y-1 px-5 pb-20 flex flex-col h-full justify-end'>
-            {messages?.map((message, index) => (
+            {messages?.map((message: any, index: number) => (
                 <div key={index} className={`message ${message.sender === user._id ? 'sent' : 'received'}`}>
                     {message?.text}
                 </div>

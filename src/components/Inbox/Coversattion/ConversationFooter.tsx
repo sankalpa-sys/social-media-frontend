@@ -1,13 +1,14 @@
 import {AudioOutlined, FileImageOutlined, HeartOutlined, MehOutlined} from "@ant-design/icons";
-import {useEffect, useRef, useState} from "react";
+import { useState} from "react";
 import {privateApi} from "../../../api/api.ts";
 import {useUser} from "../../../context/userContext.ts";
-import {io} from "socket.io-client";
 
-function ConversationFooter({selectedConversation, addMessages, chatFriend, socket}) {
+interface IProps{selectedConversation: any, addMessages: any, chatFriend: any, socket: any}
+
+function ConversationFooter({selectedConversation, addMessages, chatFriend, socket}: IProps) {
     const {user} = useUser()
     const [chat, setChat] = useState<string>("")
-    const handleSendMessage = async(e) => {
+    const handleSendMessage = async(e:any) => {
         e.preventDefault()
         socket.current.emit("sendMessage",{
             senderId: user._id,
@@ -31,7 +32,7 @@ function ConversationFooter({selectedConversation, addMessages, chatFriend, sock
         }
     }
     return (
-        <div className='flex items-center justify-between space-x-4 border rounded-full py-2 pr-5 pl-3 fixed bottom-3 w-[56%] ml-5 bg-black'>
+        <div className='flex items-center justify-between space-x-4 border rounded-full py-2 pr-5 pl-3 fixed bottom-3 md:w-[56%] w-[70%] ml-5 bg-black'>
             <MehOutlined style={{fontSize: "24px"}} />
             <form onSubmit={handleSendMessage} className='flex-1 h-full'>
                 <input value={chat} onChange={(e)=>setChat(e.target.value)} className='outline-none bg-transparent w-full h-full bg-red-400 ' type="text" placeholder='Message...'/>

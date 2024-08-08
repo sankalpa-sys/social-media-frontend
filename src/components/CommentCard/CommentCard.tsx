@@ -1,5 +1,5 @@
 import {getUserName} from "../../utils.ts";
-import {CheckCircleFilled, EllipsisOutlined, HeartOutlined} from "@ant-design/icons";
+import {CheckCircleFilled, HeartOutlined} from "@ant-design/icons";
 import {useNavigate} from "react-router-dom";
 
 

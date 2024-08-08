@@ -1,12 +1,11 @@
 import ProfileHeader from "./ProfileHeader";
 import {useEffect, useState} from "react";
-import {getUserName} from "../../utils";
 import {privateApi} from "../../api/api";
 import UserCard from "../UserCard/UserCard";
 
 
 function RightSidebar() {
-    const [suggestedUsers, setSuggestedUsers] = useState([]);
+    const [suggestedUsers, setSuggestedUsers] = useState<any>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string>("");
     useEffect(()=> {
@@ -40,9 +39,9 @@ function RightSidebar() {
                url: `/follower/follow/${id}`
            })
 
-           const newUsers = suggestedUsers.filter((user)=> String(user._id)!==id)
+           const newUsers = suggestedUsers.filter((user:any)=> String(user._id)!==id)
            setSuggestedUsers(newUsers)
-       }catch (e) {
+       }catch (e:any) {
            setError(e)
        }
 
@@ -69,7 +68,7 @@ function RightSidebar() {
             </div>
 
             <div className='w-full space-y-6'>
-                {suggestedUsers.map((user)=> (
+                {suggestedUsers.map((user:any)=> (
                     <UserCard showFollow={true} subLabel='Suggested for you' user={user} handleFollow={handleFollow} key={user._id}/>
                 ))}
             </div>

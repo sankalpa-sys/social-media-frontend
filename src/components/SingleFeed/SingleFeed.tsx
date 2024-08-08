@@ -19,7 +19,7 @@ import PostDetails from "../PostDetails/PostDetails.tsx";
 
 function SingleFeed({feed, setFeeds}: {feed: any, setFeeds: any}) {
     const navigator = useNavigate()
-    const imageRef = useRef()
+    const imageRef = useRef<any>()
     const {user} = useUser()
     const [openFeedSettingsModal, setOpenFeedSettingsModal] = useState<boolean>(false);
     const [openLikeModal, setOpenLikeModal] = useState<boolean>(false);
@@ -110,7 +110,7 @@ function SingleFeed({feed, setFeeds}: {feed: any, setFeeds: any}) {
                     <p className='text-xs'>{feed?.desc}</p>
                 </div>
                 <p onClick={()=>setOpenFeedDetails(true)} className='text-gray-400 text-xs py-1 hover:underline hover:opacity-95 cursor-pointer'>View all {feed?.comments?.length ?? 0} comments</p>
-                <p className='text-gray-400 text-xs'>Add a comment...</p>
+                <p onClick={()=>setOpenFeedDetails(true)} className='text-gray-400 text-xs cursor-pointer'>Add a comment...</p>
             </div>
 
             <Modal
@@ -154,7 +154,7 @@ function SingleFeed({feed, setFeeds}: {feed: any, setFeeds: any}) {
             )}
 
             {openFeedDetails && (
-                <PostDetails post={feed} openModal={openFeedDetails} closeModal={()=>setOpenFeedDetails(false)} postId='2334'/>
+                <PostDetails post={feed} openModal={openFeedDetails} closeModal={()=>setOpenFeedDetails(false)}/>
             )}
 
         </div>

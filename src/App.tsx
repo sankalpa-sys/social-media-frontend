@@ -5,7 +5,6 @@ import {BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import UserProfile from "./pages/profile/UserProfile";
-import LocationComponent from "./components/LocationComponent/LocationComponent.tsx";
 import {useEffect, useState} from "react";
 import {privateApi} from "./api/api.ts";
 import {ToggleCurrentUser} from "./context/toggleCurrentUser.ts";
@@ -27,7 +26,7 @@ function App() {
                     url: "/user/profile"
                 })
                 setUser(res.data);
-            }catch (e) {
+            }catch (e: any) {
                 setError(e)
             }finally {
                 setLoading(false)
@@ -62,7 +61,7 @@ function App() {
     );
 }
 
-function ProtectedRoute({ element, user }) {
+function ProtectedRoute({ element, user }: {element:any, user: any}) {
     return user ? element : <Navigate to="/login" replace />;
 }
 
