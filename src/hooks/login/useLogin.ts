@@ -29,7 +29,8 @@ export const useLogin = (): IReturnType => {
            }catch (e) {
                console.log("cannot update local storage")
            }
-            window.location.reload()
+          //goto home page throgh window
+            window.location.href = "/"
         }catch (e: any) {
             setError(e?.response.data)
         }finally{
