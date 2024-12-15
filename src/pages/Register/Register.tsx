@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom";
 import ImageUpload from "../../components/ImageUpload/ImageUpload";
 import {UploadOutlined} from "@ant-design/icons";
 
-function Register({user}) {
+function Register({user}: {user: any}) {
      const navigator = useNavigate()
     if(user) {
         navigator('/')

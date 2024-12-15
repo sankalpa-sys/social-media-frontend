@@ -3,7 +3,7 @@ import {useLogin} from "../../hooks/login/useLogin.ts";
 import {ChangeEvent, FormEvent, useState} from "react";
 import {ILoginFormData} from "../../types";
 import {useNavigate} from "react-router-dom";
-function Login({user}) {
+function Login({user}: {user: any}) {
      const navigator = useNavigate()
     if(user) {
         navigator('/')
