@@ -6,6 +6,7 @@ import {
     SearchOutlined, StrikethroughOutlined,
     VideoCameraOutlined
 } from "@ant-design/icons";
+import {useUser} from "../context/userContext.ts";
 
 type TSideBarData = {
     name: string;
@@ -50,6 +51,11 @@ const sidebarData: TSideBarData[] = [
         name: "Create",
         icon: <PlusSquareOutlined style={{fontSize: "25px"}} />,
         route: "/"
+    },
+
+    {
+        name: "Create",
+        icon: <PlusSquareOutlined style={{fontSize: "25px"}} />,
     },
 
 ]

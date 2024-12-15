@@ -3,8 +3,8 @@ import ConversationHeader from "./ConversationHeader";
 import ConversationFooter from "./ConversationFooter";
 import MainConversation from "./MainConversation";
 
-function Conversation() {
-    const selectedConversation = "s";
+function Conversation({selectedConversation}) {
+    console.log("selectedConversation", selectedConversation)
     if(!selectedConversation) return (
        <div className='h-screen flex  flex-col items-center justify-center'>
            <Empty />
@@ -13,11 +13,11 @@ function Conversation() {
     )
     return (
         <div className='h-screen flex flex-col'>
-            <ConversationHeader/>
+            <ConversationHeader selectedConversation={selectedConversation}/>
             <div className='flex-grow overflow-y-auto flex flex-col-reverse no-scrollbar mt-10'>
-                <MainConversation/>
+                <MainConversation selectedConversation={selectedConversation}/>
             </div>
-            <ConversationFooter/>
+            <ConversationFooter selectedConversation={selectedConversation}/>
         </div>
     );
 }
