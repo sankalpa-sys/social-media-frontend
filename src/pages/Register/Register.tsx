@@ -6,8 +6,12 @@ import {useNavigate} from "react-router-dom";
 import ImageUpload from "../../components/ImageUpload/ImageUpload";
 import {UploadOutlined} from "@ant-design/icons";
 
-function Register() {
+function Register({user}) {
      const navigator = useNavigate()
+    if(user) {
+        navigator('/')
+        return
+    }
     const { loading, error, handleRegister } = useRegister();
     const [formData, setFormData] = useState<IRegisterFormData>({
         name: '',

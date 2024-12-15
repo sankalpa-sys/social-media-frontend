@@ -4,7 +4,12 @@ import {ChangeEvent, FormEvent, useState} from "react";
 import {ILoginFormData} from "../../types";
 import {useNavigate} from "react-router-dom";
 function Login() {
+function Login({user}: any) {
      const navigator = useNavigate()
+    if(user) {
+        navigator('/')
+        return
+    }
     const { loading, error, handleLogin } = useLogin();
     const [formData, setFormData] = useState<ILoginFormData>({
         email: '',
