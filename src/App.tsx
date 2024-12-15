@@ -46,8 +46,8 @@ function App() {
             <UserContext.Provider value={{ user, setUser, loading, error }}>
                <ToggleCurrentUser.Provider value={{toggler: toggler, setToggler: setToggler}}>
                    <Routes>
-                       <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
-                       <Route path="/register" element={!user ? <Register /> : <Navigate to="/" />} />
+                       <Route path="/login" element={!user ? <Login user={user} /> : <Navigate to="/" />} />
+                       <Route path="/register" element={!user ? <Register user={user} /> : <Navigate to="/" />} />
 
                        <Route element={<MainLayout />}>
                            <Route path="/" element={<ProtectedRoute element={<MainFeedSection />} user={user} />} />
